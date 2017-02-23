@@ -7,6 +7,10 @@ class NoSplitTests(TestCase):
         self.assertEqual(split("A single line"), ["A single line"])
 
 
+    def test_single_line_break_doesnt_split(self):
+        self.assertEqual(split("Single line\nSecond"), ["Single line\nSecond"])
+
+
 
 class CanSplitTests(TestCase):
 
