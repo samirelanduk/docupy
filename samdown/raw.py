@@ -1,2 +1,2 @@
 def split(raw_text):
-    return raw_text.split("\n\n")
+    return raw_text.replace("\r\n", "\n").split("\n\n")

@@ -19,3 +19,10 @@ class CanSplitTests(TestCase):
          split("A single line\n\nSecond line"),
          ["A single line", "Second line"]
         )
+
+
+    def test_can_split_on_windows_line_breaks(self):
+        self.assertEqual(
+         split("A single line\r\n\r\nSecond line"),
+         ["A single line", "Second line"]
+        )
