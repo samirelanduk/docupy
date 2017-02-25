@@ -4,7 +4,7 @@ setup(
  name="samdown",
  version="0.1.0",
  description="A markdown library",
- url="https://samdown.samireland.com,
+ url="https://samdown.samireland.com",
  author="Sam Ireland",
  author_email="mail@samireland.com",
  license="MIT",
