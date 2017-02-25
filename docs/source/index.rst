@@ -15,5 +15,6 @@ Table of Contents
 
 .. toctree ::
   installing
+  overview
   api
   changelog
