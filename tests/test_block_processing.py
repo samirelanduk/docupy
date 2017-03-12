@@ -12,3 +12,10 @@ class BasicParagraphTests(TestCase):
          process_block("_Text_ _block_."),
          "<p><u>Text</u> <u>block</u>.</p>"
         )
+
+
+    def test_can_underline_elements(self):
+        self.assertEqual(
+         process_block("*Text* *block*."),
+         "<p><em>Text</em> <em>block</em>.</p>"
+        )
