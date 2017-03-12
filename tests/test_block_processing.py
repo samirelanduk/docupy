@@ -19,3 +19,10 @@ class BasicParagraphTests(TestCase):
          process_block("*Text* *block*."),
          "<p><em>Text</em> <em>block</em>.</p>"
         )
+
+
+    def test_can_bold_elements(self):
+        self.assertEqual(
+         process_block("**Text** **block**."),
+         "<p><b>Text</b> <b>block</b>.</p>"
+        )
