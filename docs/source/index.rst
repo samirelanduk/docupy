@@ -7,8 +7,8 @@ Example
 -------
 
   >>> import samdown
-  >>> samdown.html_from_markdown("HTML is easy.")
-  '<p>HTML is easy.</p>'
+  >>> samdown.html_from_markdown("HTML is *easy*.")
+  '<p>HTML is <em>easy</em>.</p>'
 
 Table of Contents
 -----------------
