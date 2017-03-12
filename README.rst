@@ -7,8 +7,8 @@ Example
 -------
 
   >>> import samdown
-  >>> samdown.html_from_markdown("HTML is easy.")
-  '<p>HTML is easy.</p>'
+  >>> samdown.html_from_markdown("HTML is *easy*.")
+  '<p>HTML is <em>easy</em>.</p>'
 
 
 
@@ -52,9 +52,28 @@ converted to UNIX ones before processing:
 >>> samdown.html_from_markdown("HTML is easy.\n\nNew paragraph.\r\n\r\nThird.")
 '<p>HTML is easy.</p>\n<p>New paragraph.</p>\n<p>Third.</p>'
 
+Formatting
+~~~~~~~~~~
+
+Basic formatting is applied as follows:
+
+* `Italics` text is created by \*surrounding with asterisks\*.
+
+* **Bold** text is created by \*\*surrounding with double asterisks\*\*.
+
+* Underlined text is created by \_surrounding with underscores\_.
+
 
 Changelog
 ---------
+
+Release 0.2.0
+~~~~~~~~~~~~~
+
+`12 March 2017`
+
+* Added formatting for bold, italics, and underlined text.
+
 
 Release 0.1.0
 ~~~~~~~~~~~~~
