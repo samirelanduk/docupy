@@ -1,9 +1,9 @@
 from setuptools import setup
 
 setup(
- name="samdown",
- version="0.2.0",
- description="A markdown library",
+ name="django-samdown",
+ version="0.3.0",
+ description="A markdown library for Django web apps.",
  url="https://samdown.samireland.com",
  author="Sam Ireland",
  author_email="mail@samireland.com",
@@ -23,5 +23,5 @@ setup(
   "Programming Language :: Python :: 3.6",
  ],
  keywords="markdown html",
- packages=["samdown"]
+ packages=["django_samdown"]
 )

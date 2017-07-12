@@ -1,5 +1,5 @@
 from unittest import TestCase
-from samdown.raw import split
+from django_samdown.raw import split
 
 class NoSplitTests(TestCase):
 

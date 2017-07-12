@@ -16,5 +16,5 @@ def html_from_markdown(markdown):
 
     :param str markdown: The markdown text to convert to HTML.
     :rtype: ``str``"""
-    
+
     return "\n".join([process_block(block) for block in split(markdown)])

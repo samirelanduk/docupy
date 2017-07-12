@@ -1,5 +1,5 @@
 from unittest import TestCase
-from samdown.block import process_block
+from django_samdown.block import process_block
 
 class BasicParagraphTests(TestCase):
 
