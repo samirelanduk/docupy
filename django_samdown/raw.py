@@ -23,16 +23,12 @@ def get_lookup():
     return lookup
 
 
-def html_from_samdown(samdown):
+def html_from_markdown(samdown):
     """Converts markdown text into HTML.
 
     :param str markdown: The markdown text to convert to HTML.
     :rtype: ``str``"""
 
-    lookup = {
-     r"_(.*?)_": r"<u>\1</u>",
-     r"\*\*(.*?)\*\*": r"<b>\1</b>",
-     r"\*(.*?)\*": r"<em>\1</em>",
-    }
+    lookup = get_lookup()
 
     return "\n".join([process_block(block, lookup) for block in split(samdown)])
