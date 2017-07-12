@@ -2,12 +2,11 @@
 
 import re
 
-def process_block(block):
+def process_block(block, lookup):
     """Takes a block of Markdown and returns the correct HTML for that
     block, based on its contents."""
 
-    block = re.sub(r"_(.*?)_", r"<u>\1</u>", block)
-    block = re.sub(r"\*\*(.*?)\*\*", r"<b>\1</b>", block)
-    block = re.sub(r"\*(.*?)\*", r"<em>\1</em>", block)
+    for pattern in lookup:
+        block = re.sub(pattern, lookup[pattern], block)
 
     return "<p>%s</p>" % block

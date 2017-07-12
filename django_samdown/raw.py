@@ -1,4 +1,5 @@
 from .block import process_block
+from django.conf import settings
 
 """Functions for processing raw markdown."""
 
@@ -11,10 +12,27 @@ def split(raw_text):
     return raw_text.replace("\r\n", "\n").split("\n\n")
 
 
-def html_from_markdown(markdown):
+def get_lookup():
+    lookup = {
+     r"_(.*?)_": r"<u>\1</u>",
+     r"\*\*(.*?)\*\*": r"<b>\1</b>",
+     r"\*(.*?)\*": r"<em>\1</em>",
+    }
+    extra = getattr(settings, "SAMDOWN_LOOKUP", {})
+    lookup.update(extra)
+    return lookup
+
+
+def html_from_samdown(samdown):
     """Converts markdown text into HTML.
 
     :param str markdown: The markdown text to convert to HTML.
     :rtype: ``str``"""
 
-    return "\n".join([process_block(block) for block in split(markdown)])
+    lookup = {
+     r"_(.*?)_": r"<u>\1</u>",
+     r"\*\*(.*?)\*\*": r"<b>\1</b>",
+     r"\*(.*?)\*": r"<em>\1</em>",
+    }
+
+    return "\n".join([process_block(block, lookup) for block in split(samdown)])
