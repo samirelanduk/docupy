@@ -14,12 +14,15 @@ def split(raw_text):
 
 def get_lookup():
     lookup = {
-     r"_(.*?)_": r"<u>\1</u>",
-     r"\*\*(.*?)\*\*": r"<b>\1</b>",
-     r"\*(.*?)\*": r"<em>\1</em>",
+     "inline": {
+      r"_(.*?)_": r"<u>\1</u>",
+      r"\*\*(.*?)\*\*": r"<b>\1</b>",
+      r"\*(.*?)\*": r"<em>\1</em>",
+     }, "block": {}
     }
     extra = getattr(settings, "SAMDOWN_LOOKUP", {})
-    lookup.update(extra)
+    lookup["inline"].update(extra.get("inline", {}))
+    lookup["block"].update(extra.get("block", {}))
     return lookup
 
 
