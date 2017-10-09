@@ -77,6 +77,13 @@ class SpecialHtmlTests(TestCase):
         self.assertEqual(html, "<h8>HHH</h8>")
 
 
+    def test_can_get_image(self):
+        html = create_special_html("![image1](path/to/image)")
+        self.assertEqual(
+         html, "<figure><img src=\"path/to/image\" title=\"image1\"></figure>"
+        )
+
+
 
 class ParagraphHtmlTests(TestCase):
 

@@ -26,6 +26,13 @@ def create_special_html(block):
         start = re.search(r"[^#]", block).start()
         level = block[:start].count("#")
         return "<h{}>{}</h{}>".format(level, block[start:].strip(), level)
+    else:
+        if re.compile(r"\[(.*?)\]\((.*?)\)").match(block[1:]):
+            return re.sub(
+             r"\[(.*?)\]\((.*?)\)",
+             r'<figure><img src="\2" title="\1"></figure>',
+             block[1:]
+            )
     return ""
 
 
