@@ -1,10 +1,10 @@
 from setuptools import setup
 
 setup(
- name="django-samdown",
- version="0.3.0",
- description="A markdown library for Django web apps.",
- url="https://samdown.samireland.com",
+ name="docupy",
+ version="0.1.0",
+ description="A markdown library.",
+ url="https://docupy.samireland.com",
  author="Sam Ireland",
  author_email="mail@samireland.com",
  license="MIT",
@@ -23,5 +23,5 @@ setup(
   "Programming Language :: Python :: 3.6",
  ],
  keywords="markdown html",
- packages=["django_samdown"]
+ packages=["docupy"]
 )
