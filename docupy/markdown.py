@@ -10,3 +10,17 @@ def text_to_blocks(text):
     blocks = [block.strip().replace("\n", " ") for block in blocks]
     blocks = list(filter(bool, blocks))
     return blocks
+
+
+def block_to_html(block):
+    if block[0] == "!" or block [0] == "#":
+        return create_special_html(block)
+    return create_paragraph_html(block)
+
+
+def create_special_html(block):
+    pass
+
+
+def create_paragraph_html(block):
+    pass

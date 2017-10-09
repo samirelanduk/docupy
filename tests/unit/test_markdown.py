@@ -39,3 +39,25 @@ class BlockSplittingTests(TestCase):
     def test_windows_line_breaks(self):
         blocks = text_to_blocks("A line.\r\n\r\nA second line")
         self.assertEqual(blocks, ["A line.", "A second line"])
+
+
+
+class BlockToHtmlTests(TestCase):
+
+    @patch("docupy.markdown.create_special_html")
+    def test_can_get_special_html(self, mock_html):
+        mock_html.return_value = "<X>...</X>"
+        html = block_to_html("!block")
+        mock_html.assert_called_with("!block")
+        self.assertEqual(html, "<X>...</X>")
+        html = block_to_html("#block")
+        mock_html.assert_called_with("#block")
+        self.assertEqual(html, "<X>...</X>")
+
+
+    @patch("docupy.markdown.create_paragraph_html")
+    def test_can_get_special_html(self, mock_html):
+        mock_html.return_value = "<X>...</X>"
+        html = block_to_html("block")
+        mock_html.assert_called_with("block")
+        self.assertEqual(html, "<X>...</X>")
