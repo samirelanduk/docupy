@@ -83,3 +83,8 @@ class ParagraphHtmlTests(TestCase):
     def test_can_create_paragraph_html(self):
         html = create_paragraph_html("text")
         self.assertEqual(html, "<p>text</p>")
+
+
+    def test_can_get_italics_text(self):
+        html = create_paragraph_html("text *italic*.")
+        self.assertEqual(html, "<p>text <em>italic</em>.</p>")
