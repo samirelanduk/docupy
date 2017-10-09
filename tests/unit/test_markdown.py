@@ -67,6 +67,15 @@ class BlockToHtmlTests(TestCase):
         self.assertEqual(html, "<X>...</X>")
 
 
+    @patch("docupy.markdown.create_paragraph_html")
+    def test_can_escape_characters(self, mock_html):
+        mock_html.return_value = "<X>\x1A..\x1A.</X>"
+        html = block_to_html("\!bl\*ck\\")
+        mock_html.assert_called_with("\x1Abl\x1Ack")
+        self.assertEqual(html, "<X>!..*.</X>")
+
+
+
 
 class SpecialHtmlTests(TestCase):
 

@@ -26,8 +26,8 @@ Here is [a link](https://example.com/).
 
 ### Inline Media
 
-\!As a side note, incorporating ![Blocks](/images/logo.png) in paragraphs has no
-effect. See - !(/videos/vid.mp4), !{zhbnwPAlKxs}.
+\!As a side note, incorporating !{blocks} in paragraphs has no
+effect. See - !(/videos/vid.mp4).
 
 ## Escaping
 

@@ -16,9 +16,22 @@ def text_to_blocks(text):
 
 
 def block_to_html(block):
-    if block[0] == "!" or block [0] == "#":
-        return create_special_html(block)
-    return create_paragraph_html(block)
+    substituted_characters = []
+    html = ""
+    while "\\" in block:
+        location = block.find("\\")
+        if location != len(block) - 1:
+            substituted_characters.append(block[location + 1])
+            block = block[:location] + "\x1A" + block[location + 2:]
+        else:
+            block = block[:-1]
+    if block[0] == "!" or block[0] == "#":
+        html = create_special_html(block)
+    else:
+        html = create_paragraph_html(block)
+    for char in substituted_characters:
+        html = html.replace("\x1A", char, 1)
+    return html
 
 
 def create_special_html(block):
