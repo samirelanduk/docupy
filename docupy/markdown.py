@@ -33,6 +33,10 @@ def create_special_html(block):
              r'<figure><img src="\2" title="\1"></figure>',
              block[1:]
             )
+        elif re.compile(r"\((.*?)\)").match(block[1:]):
+            return re.sub(
+             r"\((.*?)\)", r'<video src="\1" controls></video>', block[1:]
+            )
     return ""
 
 

@@ -84,6 +84,11 @@ class SpecialHtmlTests(TestCase):
         )
 
 
+    def test_can_get_video(self):
+        html = create_special_html("!(path/to/video)")
+        self.assertEqual(html, "<video src=\"path/to/video\" controls></video>")
+
+
 
 class ParagraphHtmlTests(TestCase):
 
