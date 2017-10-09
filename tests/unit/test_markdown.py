@@ -5,12 +5,16 @@ from docupy.markdown import *
 class MarkdownToHtmlTests(TestCase):
 
     @patch("docupy.markdown.text_to_blocks")
-    def test_can_convert_markdown_to_html(self, mock_blocks):
+    @patch("docupy.markdown.block_to_html")
+    def test_can_convert_markdown_to_html(self, mock_html, mock_blocks):
         mock_blocks.return_value = ["block1", "block2"]
+        mock_html.side_effect = ["html1", "html2"]
         markdown = "markdown"
         html = markdown_to_html(markdown)
         mock_blocks.assert_called_with("markdown")
-        self.assertEqual(html, "block1\nblock2")
+        mock_html.assert_any_call("block1")
+        mock_html.assert_any_call("block2")
+        self.assertEqual(html, "html1\nhtml2")
 
 
 
@@ -71,3 +75,11 @@ class SpecialHtmlTests(TestCase):
         self.assertEqual(html, "<h2>head</h2>")
         html = create_special_html("########HHH")
         self.assertEqual(html, "<h8>HHH</h8>")
+
+
+
+class ParagraphHtmlTests(TestCase):
+
+    def test_can_create_paragraph_html(self):
+        html = create_paragraph_html("text")
+        self.assertEqual(html, "<p>text</p>")

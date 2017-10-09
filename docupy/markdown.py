@@ -4,7 +4,8 @@ import re
 
 def markdown_to_html(markdown):
     blocks = text_to_blocks(markdown)
-    return "\n".join(blocks)
+    html_blocks = [block_to_html(block) for block in blocks]
+    return "\n".join(html_blocks)
 
 
 def text_to_blocks(text):
@@ -29,4 +30,4 @@ def create_special_html(block):
 
 
 def create_paragraph_html(block):
-    pass
+    return "<p>{}</p>".format(block)

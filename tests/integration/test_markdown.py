@@ -7,5 +7,5 @@ class MarkdownToHtmlTests(TestCase):
         with open("tests/integration/files/example.md") as f:
             markdown = f.read()
         with open("tests/integration/files/example.html") as f:
-            html = f.readlines()
+            html = [line.rstrip() for line in f.readlines()]
         self.assertEqual(docupy.markdown_to_html(markdown).split("\n"), html)
