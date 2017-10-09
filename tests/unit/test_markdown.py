@@ -88,3 +88,13 @@ class ParagraphHtmlTests(TestCase):
     def test_can_get_italics_text(self):
         html = create_paragraph_html("text *italic*.")
         self.assertEqual(html, "<p>text <em>italic</em>.</p>")
+
+
+    def test_can_get_italics_text(self):
+        html = create_paragraph_html("text **bold**.")
+        self.assertEqual(html, "<p>text <strong>bold</strong>.</p>")
+
+
+    def test_can_get_struckthrough_text(self):
+        html = create_paragraph_html("text ~~deleted~~.")
+        self.assertEqual(html, "<p>text <del>deleted</del>.</p>")

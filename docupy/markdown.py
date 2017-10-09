@@ -30,5 +30,7 @@ def create_special_html(block):
 
 
 def create_paragraph_html(block):
+    block = re.sub(r"\~\~(.*?)\~\~", r"<del>\1</del>", block)
+    block = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", block)
     block = re.sub(r"\*(.*?)\*", r"<em>\1</em>", block)
     return "<p>{}</p>".format(block)
