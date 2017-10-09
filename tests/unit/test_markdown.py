@@ -1,5 +1,18 @@
 from unittest import TestCase
-from docupy.markdown import text_to_blocks
+from unittest.mock import patch, Mock
+from docupy.markdown import *
+
+class MarkdownToHtmlTests(TestCase):
+
+    @patch("docupy.markdown.text_to_blocks")
+    def test_can_convert_markdown_to_html(self, mock_blocks):
+        mock_blocks.return_value = ["block1", "block2"]
+        markdown = "markdown"
+        html = markdown_to_html(markdown)
+        mock_blocks.assert_called_with("markdown")
+        self.assertEqual(html, "block1\nblock2")
+
+
 
 class BlockSplittingTests(TestCase):
 
