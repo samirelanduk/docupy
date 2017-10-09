@@ -98,3 +98,15 @@ class ParagraphHtmlTests(TestCase):
     def test_can_get_struckthrough_text(self):
         html = create_paragraph_html("text ~~deleted~~.")
         self.assertEqual(html, "<p>text <del>deleted</del>.</p>")
+
+
+    def test_can_get_link_text(self):
+        html = create_paragraph_html("text [link](path).")
+        self.assertEqual(html, "<p>text <a href=\"path\">link</a>.</p>")
+
+
+    def test_can_get_link_text(self):
+        html = create_paragraph_html("text [link]({path}).")
+        self.assertEqual(
+         html, "<p>text <a href=\"path\" target=\"_blank\">link</a>.</p>"
+        )

@@ -14,7 +14,7 @@ Here is [a link](https://example.com/).
 
 ### Special Example...
 
-[This link]({https://example3.com}) opens in a new tab.
+[This link]({https://example3.com/}) opens in a new tab.
 
 ## Media
 
