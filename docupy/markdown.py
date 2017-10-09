@@ -1,5 +1,7 @@
 """This module contains for functions for parsing markdown."""
 
+import re
+
 def markdown_to_html(markdown):
     blocks = text_to_blocks(markdown)
     return "\n".join(blocks)
@@ -19,7 +21,11 @@ def block_to_html(block):
 
 
 def create_special_html(block):
-    pass
+    if block[0] == "#":
+        start = re.search(r"[^#]", block).start()
+        level = block[:start].count("#")
+        return "<h{}>{}</h{}>".format(level, block[start:].strip(), level)
+    return ""
 
 
 def create_paragraph_html(block):

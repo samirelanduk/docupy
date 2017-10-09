@@ -61,3 +61,13 @@ class BlockToHtmlTests(TestCase):
         html = block_to_html("block")
         mock_html.assert_called_with("block")
         self.assertEqual(html, "<X>...</X>")
+
+
+
+class SpecialHtmlTests(TestCase):
+
+    def test_can_create_heading_html(self):
+        html = create_special_html("##     head")
+        self.assertEqual(html, "<h2>head</h2>")
+        html = create_special_html("########HHH")
+        self.assertEqual(html, "<h8>HHH</h8>")
