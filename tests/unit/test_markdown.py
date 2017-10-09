@@ -89,6 +89,15 @@ class SpecialHtmlTests(TestCase):
         self.assertEqual(html, "<video src=\"path/to/video\" controls></video>")
 
 
+    def test_can_get_youtube(self):
+        html = create_special_html("!{xxxyyyzzz}")
+        self.assertEqual(
+         html,
+         "<iframe class=\"youtube\" src=\"//www.youtube.com/embed"
+         "/xxxyyyzzz/\" frameborder=\"0\" allowfullscreen></iframe>"
+        )
+
+
 
 class ParagraphHtmlTests(TestCase):
 

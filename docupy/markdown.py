@@ -37,6 +37,13 @@ def create_special_html(block):
             return re.sub(
              r"\((.*?)\)", r'<video src="\1" controls></video>', block[1:]
             )
+        elif re.compile(r"\{(.*?)\}").match(block[1:]):
+            return re.sub(
+             r"\{(.*?)\}",
+             r'<iframe class="youtube" src="//www.youtube.com/embed'
+             r'/\1/" frameborder="0" allowfullscreen></iframe>',
+             block[1:]
+            )
     return ""
 
 
