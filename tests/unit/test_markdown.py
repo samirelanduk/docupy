@@ -126,8 +126,8 @@ class SpecialHtmlTests(TestCase):
         html = create_special_html("!{xxxyyyzzz}")
         self.assertEqual(
          html,
-         "<iframe class=\"youtube\" src=\"//www.youtube.com/embed"
-         "/xxxyyyzzz/\" frameborder=\"0\" allowfullscreen></iframe>"
+         "<div class=\"youtube\"><iframe src=\"//www.youtube.com/embed"
+         "/xxxyyyzzz/\" frameborder=\"0\" allowfullscreen></iframe></div>"
         )
 
 
@@ -159,8 +159,15 @@ class ParagraphHtmlTests(TestCase):
         self.assertEqual(html, "<p>text <a href=\"path\">link</a>.</p>")
 
 
-    def test_can_get_link_text(self):
-        html = create_paragraph_html("text [link]({path}).")
+    def test_can_get_external_link_text(self):
+        html = create_paragraph_html("text {link}(path).")
         self.assertEqual(
          html, "<p>text <a href=\"path\" target=\"_blank\">link</a>.</p>"
+        )
+
+
+    def test_two_links(self):
+        html = create_paragraph_html("[link](path) text {link}(path).")
+        self.assertEqual(
+         html, "<p><a href=\"path\">link</a> text <a href=\"path\" target=\"_blank\">link</a>.</p>"
         )

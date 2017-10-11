@@ -14,7 +14,9 @@ Here is [a link](https://example.com/).
 
 ### Special Example...
 
-[This link]({https://example3.com/}) opens in a new tab.
+{This link}(https://example3.com/) opens in a new tab.
+
+You [can](https://example.com/) have {multiple}(https://example3.com/) links!
 
 ## Media
 

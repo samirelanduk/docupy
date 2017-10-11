@@ -55,8 +55,8 @@ def create_special_html(block, paths=None):
         elif re.compile(r"\{(.*?)\}").match(block[1:]):
             return re.sub(
              r"\{(.*?)\}",
-             r'<iframe class="youtube" src="//www.youtube.com/embed'
-             r'/\1/" frameborder="0" allowfullscreen></iframe>',
+             r'<div class="youtube"><iframe src="//www.youtube.com/embed'
+             r'/\1/" frameborder="0" allowfullscreen></iframe></div>',
              block[1:]
             )
     return ""
@@ -64,7 +64,7 @@ def create_special_html(block, paths=None):
 
 def create_paragraph_html(block):
     block = re.sub(
-     r"\[(.*?)\]\(\{(.*?)\}\)", r'<a href="\2" target="_blank">\1</a>', block
+     r"\{(.*?)\}\((.*?)\)", r'<a href="\2" target="_blank">\1</a>', block
     )
     block = re.sub(r"\[(.*?)\]\((.*?)\)", r'<a href="\2">\1</a>', block)
     block = re.sub(r"\~\~(.*?)\~\~", r"<del>\1</del>", block)
