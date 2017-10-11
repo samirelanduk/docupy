@@ -10,10 +10,10 @@ class MarkdownToHtmlTests(TestCase):
         mock_blocks.return_value = ["block1", "block2"]
         mock_html.side_effect = ["html1", "html2"]
         markdown = "markdown"
-        html = markdown_to_html(markdown)
+        html = markdown_to_html(markdown, paths="PATHS")
         mock_blocks.assert_called_with("markdown")
-        mock_html.assert_any_call("block1")
-        mock_html.assert_any_call("block2")
+        mock_html.assert_any_call("block1", paths="PATHS")
+        mock_html.assert_any_call("block2", paths="PATHS")
         self.assertEqual(html, "html1\nhtml2")
 
 
@@ -51,18 +51,18 @@ class BlockToHtmlTests(TestCase):
     @patch("docupy.markdown.create_special_html")
     def test_can_get_special_html(self, mock_html):
         mock_html.return_value = "<X>...</X>"
-        html = block_to_html("!block")
-        mock_html.assert_called_with("!block")
+        html = block_to_html("!block", paths="PATHS")
+        mock_html.assert_called_with("!block", paths="PATHS")
         self.assertEqual(html, "<X>...</X>")
-        html = block_to_html("#block")
-        mock_html.assert_called_with("#block")
+        html = block_to_html("#block", paths="PAHS")
+        mock_html.assert_called_with("#block", paths="PAHS")
         self.assertEqual(html, "<X>...</X>")
 
 
     @patch("docupy.markdown.create_paragraph_html")
-    def test_can_get_special_html(self, mock_html):
+    def test_can_get_para_html(self, mock_html):
         mock_html.return_value = "<X>...</X>"
-        html = block_to_html("block")
+        html = block_to_html("block", paths="PATHS")
         mock_html.assert_called_with("block")
         self.assertEqual(html, "<X>...</X>")
 
@@ -93,9 +93,33 @@ class SpecialHtmlTests(TestCase):
         )
 
 
+    def test_can_get_image_with_lookup(self):
+        html = create_special_html("![pp](pp)", paths={"pp": "1", "gg": "2"})
+        self.assertEqual(
+         html, "<figure><img src=\"1\" title=\"pp\"></figure>"
+        )
+
+
+    def test_can_get_image_no_lookup(self):
+        html = create_special_html("![gg](ll)", paths={"pp": "1", "gg": "2"})
+        self.assertEqual(
+         html, "<figure><img src=\"\" title=\"gg\"></figure>"
+        )
+
+
     def test_can_get_video(self):
         html = create_special_html("!(path/to/video)")
         self.assertEqual(html, "<video src=\"path/to/video\" controls></video>")
+
+
+    def test_can_get_video_with_lookup(self):
+        html = create_special_html("!(pp)", paths={"pp": "1", "gg": "2"})
+        self.assertEqual(html, "<video src=\"1\" controls></video>")
+
+
+    def test_can_get_video_no_lookup(self):
+        html = create_special_html("!(ll)", paths={"pp": "1", "gg": "2"})
+        self.assertEqual(html, "<video src=\"\" controls></video>")
 
 
     def test_can_get_youtube(self):

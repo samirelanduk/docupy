@@ -2,9 +2,9 @@
 
 import re
 
-def markdown_to_html(markdown):
+def markdown_to_html(markdown, paths=None):
     blocks = text_to_blocks(markdown)
-    html_blocks = [block_to_html(block) for block in blocks]
+    html_blocks = [block_to_html(block, paths=paths) for block in blocks]
     return "\n".join(html_blocks)
 
 
@@ -15,7 +15,7 @@ def text_to_blocks(text):
     return blocks
 
 
-def block_to_html(block):
+def block_to_html(block, paths=None):
     substituted_characters = []
     html = ""
     while "\\" in block:
@@ -26,7 +26,7 @@ def block_to_html(block):
         else:
             block = block[:-1]
     if block[0] == "!" or block[0] == "#":
-        html = create_special_html(block)
+        html = create_special_html(block, paths=paths)
     else:
         html = create_paragraph_html(block)
     for char in substituted_characters:
@@ -34,22 +34,24 @@ def block_to_html(block):
     return html
 
 
-def create_special_html(block):
+def create_special_html(block, paths=None):
     if block[0] == "#":
         start = re.search(r"[^#]", block).start()
         level = block[:start].count("#")
         return "<h{}>{}</h{}>".format(level, block[start:].strip(), level)
     else:
         if re.compile(r"\[(.*?)\]\((.*?)\)").match(block[1:]):
+            path = re.compile(r"\[(.*?)\]\((.*?)\)").findall(block[1:])[0][1]
+            if paths: path = paths.get(path, "")
             return re.sub(
              r"\[(.*?)\]\((.*?)\)",
-             r'<figure><img src="\2" title="\1"></figure>',
+             r'<figure><img src="{}" title="\1"></figure>'.format(path),
              block[1:]
             )
         elif re.compile(r"\((.*?)\)").match(block[1:]):
-            return re.sub(
-             r"\((.*?)\)", r'<video src="\1" controls></video>', block[1:]
-            )
+            path = re.compile(r"\((.*?)\)").findall(block[1:])[0]
+            if paths: path = paths.get(path, "")
+            return '<video src="{}" controls></video>'.format(path)
         elif re.compile(r"\{(.*?)\}").match(block[1:]):
             return re.sub(
              r"\{(.*?)\}",
