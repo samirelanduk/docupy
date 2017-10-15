@@ -3,12 +3,25 @@
 import re
 
 def markdown_to_html(markdown, paths=None):
+    """Takes a string in markdown, and converts it to HTML. There must be two
+    line breaks between separate blocks.
+
+    :param str markdown: The maekdown to convert.
+    :param dict paths: If given, any paths will be replaced using this lookup.
+    :rtype: ``str``"""
+
     blocks = text_to_blocks(markdown)
     html_blocks = [block_to_html(block, paths=paths) for block in blocks]
     return "\n".join(html_blocks)
 
 
 def text_to_blocks(text):
+    """Breaks a string into a list of blocks, using double line breaks.
+    Windows line breaks (``\\r\\n``) are supported.
+
+    :param str text: The string to break up.
+    :rtype: ``list``"""
+
     blocks = text.replace("\r\n", "\n").split("\n\n")
     blocks = [block.strip().replace("\n", " ") for block in blocks]
     blocks = list(filter(bool, blocks))
@@ -16,6 +29,12 @@ def text_to_blocks(text):
 
 
 def block_to_html(block, paths=None):
+    """Converts a markdown block to its HTML equivalent.
+
+    :param str block: The block to convert.
+    :param dict paths: If given, any paths will be replaced using this lookup.
+    :rtype: ``str``"""
+
     substituted_characters = []
     html = ""
     while "\\" in block:
@@ -35,6 +54,13 @@ def block_to_html(block, paths=None):
 
 
 def create_special_html(block, paths=None):
+    """Converts a special markdown block to its HTML equivalent. That is,
+    images, videos, and YouTube blocks.
+
+    :param str block: The block to convert.
+    :param dict paths: If given, any paths will be replaced using this lookup.
+    :rtype: ``str``"""
+
     if block[0] == "#":
         start = re.search(r"[^#]", block).start()
         level = block[:start].count("#")
@@ -63,6 +89,12 @@ def create_special_html(block, paths=None):
 
 
 def create_paragraph_html(block):
+    """Converts a paragraph markdown block to its HTML equivalent.
+
+    :param str block: The block to convert.
+    :param dict paths: If given, any paths will be replaced using this lookup.
+    :rtype: ``str``"""
+
     block = re.sub(
      r"\{(.*?)\}\((.*?)\)", r'<a href="\2" target="_blank">\1</a>', block
     )
