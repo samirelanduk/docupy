@@ -96,7 +96,14 @@ def create_paragraph_html(block):
     :rtype: ``str``"""
 
     block = re.sub(
+     r"\{(.*?)\}\((.*?) \"(.*?)\"\)",
+     r'<a href="\2" target="_blank" title="\3">\1</a>', block
+    )
+    block = re.sub(
      r"\{(.*?)\}\((.*?)\)", r'<a href="\2" target="_blank">\1</a>', block
+    )
+    block = re.sub(
+     r"\[(.*?)\]\((.*?) \"(.*?)\"\)", r'<a href="\2" title="\3">\1</a>', block
     )
     block = re.sub(r"\[(.*?)\]\((.*?)\)", r'<a href="\2">\1</a>', block)
     block = re.sub(r"\~\~(.*?)\~\~", r"<del>\1</del>", block)

@@ -76,7 +76,6 @@ class BlockToHtmlTests(TestCase):
 
 
 
-
 class SpecialHtmlTests(TestCase):
 
     def test_can_create_heading_html(self):
@@ -159,10 +158,24 @@ class ParagraphHtmlTests(TestCase):
         self.assertEqual(html, "<p>text <a href=\"path\">link</a>.</p>")
 
 
+    def test_can_get_link_title_text(self):
+        html = create_paragraph_html("text [link](path \"title\").")
+        self.assertEqual(
+         html, "<p>text <a href=\"path\" title=\"title\">link</a>.</p>"
+        )
+
+
     def test_can_get_external_link_text(self):
         html = create_paragraph_html("text {link}(path).")
         self.assertEqual(
          html, "<p>text <a href=\"path\" target=\"_blank\">link</a>.</p>"
+        )
+
+
+    def test_can_get_external_link_title_text(self):
+        html = create_paragraph_html("text {link}(path \"title\").")
+        self.assertEqual(
+         html, "<p>text <a href=\"path\" target=\"_blank\" title=\"title\">link</a>.</p>"
         )
 
 

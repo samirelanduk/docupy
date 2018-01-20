@@ -12,11 +12,13 @@ Here is [a link](https://example.com/).
 
 [This whole paragraph is a link.](https://example2.com/)
 
+And [this link](https://example2.com/ "title") has a title.
+
 ### Special Example...
 
 {This link}(https://example3.com/) opens in a new tab.
 
-You [can](https://example.com/) have {multiple}(https://example3.com/) links!
+You [can](https://example.com/) have {multiple}(http://example3.com/ "t") links!
 
 ## Media
 
