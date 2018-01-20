@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
  name="docupy",
- version="0.1.0",
+ version="0.2.0",
  description="A markdown library.",
  url="https://docupy.samireland.com",
  author="Sam Ireland",
@@ -14,11 +14,6 @@ setup(
   "License :: OSI Approved :: MIT License",
   "Topic :: Text Processing :: Markup :: HTML",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.0",
-  "Programming Language :: Python :: 3.1",
-  "Programming Language :: Python :: 3.2",
-  "Programming Language :: Python :: 3.3",
-  "Programming Language :: Python :: 3.4",
   "Programming Language :: Python :: 3.5",
   "Programming Language :: Python :: 3.6",
  ],
