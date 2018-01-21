@@ -24,6 +24,8 @@ You [can](https://example.com/) have {multiple}(http://example3.com/ "t") links!
 
 ![Image here!](/images/logo.png)
 
+![Image here][With a *figure*](/images/logo.png)
+
 !(/videos/vid.mp4)
 
 !{zhbnwPAlKxs}
