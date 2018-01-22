@@ -32,9 +32,27 @@ You [can](https://example.com/) have {multiple}(http://example3.com/ "t") links!
 
 ### Inline Media
 
-\!As a side note, incorporating !{blocks} in paragraphs has no
-effect. See - !(/videos/vid.mp4).
+\!As a side note, incorporating !{blocks} in paragraphs has no effect. See - !(/videos/vid.mp4).
 
 ## Escaping
 
 You can escape characters like \*this\* and \[this](see!).
+
+\- Blocks can also be escaped.
+
+## Lists
+
+Here is a list:
+
+- Item 1
+-Item 2
+
+-   Item 3
+
+Isn't it wonderful?
+
+Numbered list:
+
+1.  First
+2. Second
+3.Third
