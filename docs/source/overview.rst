@@ -28,7 +28,7 @@ Basic formatting is applied as follows:
 
 * `Links <https://samireland.com/>`_ are created like: \[text\]\(path).
 
-  * External links use curly braces: \{text\}\(path).
+* External links use curly braces: \{text\}\(path).
 
 * Strikethrough text uses tildes: ~~deleted text~~.
 
@@ -48,6 +48,11 @@ YouTube embeds use ``!{youtube_id}`` notation.
 You can provide a lookup dictionary to substitute words for paths when rendered.
 For example the block ``![alt text](seaside-2)`` when rendered with
 ``{"seaside-2": "path/to/image"}`` will point in the right place.
+
+Group blocks
+~~~~~~~~~~~~
+
+Bullet pointed lists (``-``) and numbered lists will be detected automatically.
 
 
 Example

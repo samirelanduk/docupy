@@ -1,6 +1,16 @@
 Changelog
 ---------
 
+Release 0.2.0
+~~~~~~~~~~~~~
+
+`22 January 2018`
+
+* Added figure captions.
+
+* Added bullet point and numbered lists.
+
+
 Release 0.1.0
 ~~~~~~~~~~~~~
 
