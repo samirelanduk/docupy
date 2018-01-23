@@ -1,0 +1,11 @@
+language: python
+
+python:
+    - 3.6
+    - 3.5
+
+script:
+    - coverage run --source=docupy -m unittest discover tests
+
+after_success:
+  - coveralls
