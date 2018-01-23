@@ -1,3 +1,16 @@
+.. |travis| image:: https://api.travis-ci.org/samirelanduk/docupy.svg?branch=0.2
+
+.. _travis https://travis-ci.org/samirelanduk/docupy/
+
+.. |coveralls| image:: https://coveralls.io/repos/github/samirelanduk/docupy/badge.svg?branch=0.2
+
+.. _coveralls https://coveralls.io/github/samirelanduk/docupy/
+
+.. |pypi| image:: https://img.shields.io/pypi/pyversions/docupy.svg
+
+
+|travis|_ |coveralls|_ |pypi|
+
 docupy
 ======
 
@@ -77,7 +90,7 @@ Basic formatting is applied as follows:
 
 * `Links <https://samireland.com/>`_ are created like: \[text\]\(path).
 
-  * External links use curly braces: \{text\}\(path).
+* External links use curly braces: \{text\}\(path).
 
 * Strikethrough text uses tildes: ~~deleted text~~.
 
@@ -97,6 +110,11 @@ YouTube embeds use ``!{youtube_id}`` notation.
 You can provide a lookup dictionary to substitute words for paths when rendered.
 For example the block ``![alt text](seaside-2)`` when rendered with
 ``{"seaside-2": "path/to/image"}`` will point in the right place.
+
+Group blocks
+~~~~~~~~~~~~
+
+Bullet pointed lists (``-``) and numbered lists will be detected automatically.
 
 
 Example
@@ -167,6 +185,16 @@ Example
 
 Changelog
 ---------
+
+Release 0.2.0
+~~~~~~~~~~~~~
+
+`22 January 2018`
+
+* Added figure captions.
+
+* Added bullet point and numbered lists.
+
 
 Release 0.1.0
 ~~~~~~~~~~~~~
