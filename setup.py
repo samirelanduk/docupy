@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
  name="docupy",
- version="0.2.0",
+ version="0.3.0",
  description="A markdown library.",
  url="https://docupy.samireland.com",
  author="Sam Ireland",
@@ -16,6 +16,7 @@ setup(
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.5",
   "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.7",
  ],
  keywords="markdown html",
  packages=["docupy"]
