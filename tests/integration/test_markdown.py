@@ -3,23 +3,29 @@ import docupy
 
 class MarkdownToHtmlTests(TestCase):
 
+    def check_markdown_to_html(self, markdown, html, lookup=None):
+        with open(markdown) as f: markdown = f.read()
+        with open(html) as f: html = f.read()
+        lookup = lookup or {}
+        for key, value in lookup.items():
+            markdown = markdown.replace("\n" + value, "\n" + key)
+        converted = docupy.markdown_to_html(markdown, paths=lookup)
+        for line1, line2 in zip(converted.splitlines(), html.splitlines()):
+            self.assertEqual(line1, line2)
+        self.assertEqual(len(converted.splitlines()), len(html.splitlines()))
+
+
+
     def test_can_convert_markdown_to_html(self):
-        with open("tests/integration/files/example.md") as f:
-            markdown = f.read()
-        with open("tests/integration/files/example.html") as f:
-            html = [line.rstrip() for line in f.readlines()]
-        self.assertEqual(docupy.markdown_to_html(markdown).split("\n"), html)
+        self.check_markdown_to_html(
+         "tests/integration/files/example.md",
+         "tests/integration/files/example.html"
+        )
 
 
     def test_can_convert_markdown_to_html_path_substitution(self):
-        lookup = {"logo": "/images/logo.png", "vid": "/videos/vid.mp4"}
-        with open("tests/integration/files/example.md") as f:
-            markdown = f.read()
-        markdown = markdown.replace("/images/logo.png", "logo").replace(
-         "/videos/vid.mp4)\n", "vid)\n"
-        )
-        with open("tests/integration/files/example.html") as f:
-            html = [line.rstrip() for line in f.readlines()]
-        self.assertEqual(
-         docupy.markdown_to_html(markdown, paths=lookup).split("\n"), html
+        self.check_markdown_to_html(
+         "tests/integration/files/example.md",
+         "tests/integration/files/example.html",
+         lookup={"logo": "/images/logo.png", "vid": "/videos/vid.mp4"}
         )

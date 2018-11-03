@@ -1,6 +1,34 @@
 """This module contains for functions for parsing markdown."""
 
 import re
+from collections import OrderedDict
+
+BLOCKS = ["h", "code", "div", "figure", "video", "li"]
+
+PATTERNS = OrderedDict((
+ (r"\n### (.+)", "\n<h3>\\1</h3>"),
+ (r"\n## (.+)", "\n<h2>\\1</h2>"),
+ (r"\n# (.+)", "\n<h1>\\1</h1>"),
+ (r"\~\~(.+)\~\~", "<del>\\1</del>"),
+ (r"\*\*(.+)\*\*", "<strong>\\1</strong>"),
+ (r"\*(.+)\*", "<em>\\1</em>"),
+ (r"\n- *(.+)", "\n<li>\\1</li>u"),
+ (r"\n\d+\. *(.+)", "\n<li>\\1</li>o"),
+ (r"\n\!\[(.+?)\]\[(.+?)\]\((.+?)\)", "\n<figure><img src=\"\\3\" "
+  "title=\"\\1\"><figcaption>\\2</figcaption></figure>"),
+ (r"\n\!\[(.+?)\]\((.+?)\)", "\n<figure><img src=\"\\2\" title=\"\\1\"></figure>"),
+ (r"\n\!\((.+?)\)", "\n<video src=\"\\1\" controls></video>"),
+ (r"\n\!\{(.+?)\}", "\n<div class=\"youtube\">""<iframe src=\"//www.youtube.com"
+  "/embed/\\1/\" frameborder=\"0\" allowfullscreen></iframe></div>"),
+ (r"\[(.+?)\]\(((.(?!\"))+?)\)", "<a href=\"\\2\">\\1</a>"),
+ (r"\[(.+?)\]\((.+?) \"(.+)\"\)", "<a href=\"\\2\" title=\"\\3\">\\1</a>"),
+ (r"\{(.+?)\}\(((.(?!\"))+?)\)", "<a href=\"\\2\" target=\"_blank\">\\1</a>"),
+ (r"\{(.+?)\}\((.+?) \"(.+)\"\)", "<a href=\"\\2\" target=\"_blank\" "
+  "title=\"\\3\">\\1</a>"),
+ (r"\{(.+?)\}\((.+?)\)", "<a href=\"\\2\" target=\"_blank\">\\1</a>"),
+ (r"```(.+?)\n([\S\s]+?)```", "<code class=\"language-\\1\">\n\\2</code>"),
+ (r"```([\S\s]+?)```", "<code>\\1</code>")
+))
 
 def markdown_to_html(markdown, paths=None):
     """Takes a string in markdown, and converts it to HTML.
@@ -10,14 +38,18 @@ def markdown_to_html(markdown, paths=None):
     :rtype: ``str``"""
 
     markdown, characters = escape_characters(markdown)
-    blocks = markdown_to_blocks(markdown)
-    blocks = group_blocks(blocks)
-    html = [block_to_html(block, paths=paths) if isinstance(block, str)
-     else group_block_to_html(block) for block in blocks]
-    html = "\n".join(html)
+    html = "\n" + markdown
+    for key, value in PATTERNS.items():
+        html = re.sub(key, value, html)
+    if paths:
+        for k, v in paths.items():
+            html = html.replace('src="{}"'.format(k), 'src="{}"'.format(v))
     for character in characters:
         html = html.replace("\x1A", character, 1)
-    return html
+    lines = html.splitlines()
+    lines = add_p_tags(lines)
+    lines = add_list_tags(lines)
+    return "\n".join(lines)
 
 
 def escape_characters(markdown):
@@ -32,245 +64,61 @@ def escape_characters(markdown):
 
     characters = []
     while "\\" in markdown:
-        location = markdown.find("\\")
-        if location != len(markdown) - 1:
-            character = markdown[location + 1]
+        loc = markdown.find("\\")
+        if loc != len(markdown) - 1:
+            character = markdown[loc + 1]
             if character != "\n":
                 characters.append(character)
-                markdown = markdown[:location] + "\x1A" + markdown[location + 2:]
+                markdown = markdown[:loc] + "\x1A" + markdown[loc + 2:]
             else:
-                markdown = markdown[:location] + markdown[location + 1:]
+                markdown = markdown[:loc] + markdown[loc + 1:]
         else:
             break
     return markdown, characters
 
 
-def markdown_to_blocks(markdown):
-    """Breaks a string into a list of blocks, using single line breaks.
-    Windows line breaks (``\\r\\n``) are supported.
+def add_p_tags(lines):
+    """Takes a list of HTML lines and puts p tags around all the lines that
+    need it.
 
-    :param str markdown: The string to break up.
-    :rtype: ``list``"""
+    It will also remove empty lines.
 
-    blocks = markdown.replace("\r\n", "\n").split("\n")
-    blocks = [block.strip().replace("\n", " ") for block in blocks]
-    blocks = list(filter(bool, blocks))
-    return blocks
+    :param list lines: the lines to convert.
+    "rtype: ``list``"""
+
+    output_lines = []
+    in_code = False
+    for line in lines:
+        if line.strip():
+            if line.strip().startswith("<code"): in_code = True
+            if line.strip().startswith("</code"): in_code = False
+            for b in BLOCKS:
+                if line.startswith("<" + b) or line.startswith("</" + b)\
+                 or in_code: break
+            else:
+                line = "<p>{}</p>".format(line)
+            output_lines.append(line)
+    return output_lines
 
 
-def group_blocks(blocks):
-    """Takes a list of blocks, and checks each to see if it is part of a group.
-    It then clusters the consecutive ones together as a sub-list and returns
-    the list back.
+def add_list_tags(lines):
+    """Takes a list of HTML lines and puts list tags around all the lines that
+    need it.
 
-    :param list blocks: The list of markdown blocks to group.
-    :rtype: ``list``"""
+    :param list lines: the lines to convert.
+    "rtype: ``list``"""
 
-    grouped_blocks = []
-    group_block = []
-    while blocks:
-        if is_multi_block(blocks[0]):
-            group_block.append(blocks.pop(0))
+    output_lines = []
+    list_type = "u"
+    while lines:
+        if lines[0][:3] == "<li" and output_lines[-1][:3] != "<li":
+            list_type = lines[0][-1]
+            output_lines.append("<{}l>".format(list_type))
+        if lines[0][:3] == "<li":
+            output_lines.append(lines.pop(0)[:-1])
         else:
-            if group_block:
-                grouped_blocks.append(group_block)
-                group_block = []
-            grouped_blocks.append(blocks.pop(0))
-    if group_block:
-        grouped_blocks.append(group_block)
-    return grouped_blocks
-
-
-def block_to_html(block, paths=None):
-    """Converts a Markdown block to the relevant HTML.
-
-    :param str block: The string to convert.
-    :param dict paths: If given, these will be used to translate any paths.
-    :rtype: ``str``"""
-
-    if block[0] == "#":
-        return create_heading_html(block)
-    elif re.compile(r"\!\[(.*?)\](\[.*?\])?\((.*?)\)").match(block):
-        return create_image_html(block, paths=paths)
-    elif re.compile(r"\!\((.*?)\)").match(block):
-        return create_video_html(block, paths=paths)
-    elif re.compile(r"\!\{(.*?)\}").match(block):
-        return create_youtube_html(block)
-    else:
-        return create_paragraph_html(block)
-
-
-def group_block_to_html(blocks):
-    """Converts a list of grouped Markdown block to the relevant HTML.
-
-    :param list blocks: The markdown blocks.
-    :rtype: ``str``"""
-
-    return create_list_html(blocks)
-
-
-def is_multi_block(block):
-    """Checks whether a Markdown block is part of a group of blocks.
-
-    :param str block: The block to check.
-    :rtype: ``bool``"""
-
-    if re.compile(r"([\d]*\.|-)(.*)").match(block):
-        return True
-    return False
-
-
-def create_paragraph_html(block, p=True):
-    """Converts a paragraph markdown block to its HTML equivalent.
-
-    :param str block: The block to convert.
-    :param bool p: If ``false``, the enclosing <p> tags will be omitted.
-    :rtype: ``str``"""
-
-    block = re.sub(
-     r"\{(.*?)\}\((.*?) \"(.*?)\"\)",
-     r'<a href="\2" target="_blank" title="\3">\1</a>', block
-    )
-    block = re.sub(
-     r"\{(.*?)\}\((.*?)\)", r'<a href="\2" target="_blank">\1</a>', block
-    )
-    block = re.sub(
-     r"\[(.*?)\]\((.*?) \"(.*?)\"\)", r'<a href="\2" title="\3">\1</a>', block
-    )
-    block = re.sub(r"\[(.*?)\]\((.*?)\)", r'<a href="\2">\1</a>', block)
-    block = re.sub(r"\~\~(.*?)\~\~", r"<del>\1</del>", block)
-    block = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", block)
-    block = re.sub(r"\*(.*?)\*", r"<em>\1</em>", block)
-    return "<p>{}</p>".format(block) if p else block
-
-
-def create_heading_html(block):
-    """Converts a heading markdown block to HTML. The heading level will depend
-    on the number of # characters, and there is no upper limit.
-
-    :param str block: The block to convert."""
-
-    start = re.search(r"[^#]", block).start()
-    level = block[:start].count("#")
-    return "<h{}>{}</h{}>".format(level, block[start:].strip(), level)
-
-
-def create_image_html(block, paths=None):
-    """Converts an image markdown block to HTML. It accepts blocks with or
-    without figcaption sections.
-
-    :param str block: The block to convert.
-    :param dict paths: If given, these will be used to translate any paths.
-    :rtype: ``str``"""
-
-    title, *mid, path = re.compile(
-     r"\!\[(.*?)\](\[.*?\])?\((.*?)\)"
-    ).findall(block)[0]
-    if paths: path = paths.get(path, path)
-    caption = ""
-    if mid and mid[0]:
-        caption = "<figcaption>{}</figcaption>".format(
-         create_paragraph_html(mid[0][1:-1], p=False)
-        )
-    return '<figure><img src="{}" title="{}">{}</figure>'.format(
-     path, title, caption
-    )
-
-
-def create_video_html(block, paths=None):
-    """Converts a video markdown block to HTML.
-
-    :param str block: The block to convert.
-    :param dict paths: If given, these will be used to translate any paths.
-    :rtype: ``str``"""
-
-    path = re.compile(r"\!\((.*?)\)").findall(block)[0]
-    if paths: path = paths.get(path, path)
-    return '<video src="{}" controls></video>'.format(path)
-
-
-def create_youtube_html(block):
-    """Converts a youtube markdown block to HTML.
-
-    :param str block: The block to convert."""
-
-    v = re.compile(r"\!\{(.*?)\}").findall(block)[0]
-    return ('<div class="youtube"><iframe src="//www.youtube.com/embed/{}/"' +
-    ' frameborder="0" allowfullscreen></iframe></div>').format(v)
-
-
-def create_list_html(blocks):
-    """Converts a series of list item markdown blocks to the relevant HTML.
-
-    :param list blocks: The list item blocks.
-    :rtype: ``str``"""
-
-    lines = []
-    number = False
-    for block in blocks:
-        if block[0] == "-":
-            lines.append(block[1:].strip())
-        else:
-            number = True
-            lines.append(block[block.find(".") + 1:].strip())
-    html = "<{}l>\n{{}}\n</{}l>".format(*["o", "o"] if number else ["u", "u"])
-    return html.format("\n".join(["<li>{}</li>".format(line) for line in lines]))
-
-
-
-
-
-'''
-
-
-
-
-
-
-
-
-def create_block_html(block, paths=None):
-    """Converts a Markdown block to the relevant HTML.
-
-    :param str text: The string to break up.
-    :rtype: ``list``"""
-
-    block, characters = escape_characters(block)
-    html = ""
-    if block[0] == "#":
-        html = create_heading_html(block)
-    elif re.compile(r"\!\[(.*?)\](\[.*?\])?\((.*?)\)").match(block):
-        html =  create_image_html(block, paths=paths)
-    elif re.compile(r"\!\((.*?)\)").match(block):
-        html =  create_video_html(block, paths=paths)
-    elif re.compile(r"\!\{(.*?)\}").match(block):
-        html =  create_youtube_html(block)
-    else:
-        html = create_paragraph_html(block)
-    for char in characters:
-        html = html.replace("\x1A", char, 1)
-    return html
-
-
-def create_multi_block_html(blocks):
-    pass
-
-
-
-
-
-def create_list_html(block):
-    """Converts a list item markdown block to HTML.
-
-    :param str block: The block to convert."""
-
-    item = ""
-    if block[0] == "-":
-        item = block[1:].strip()
-    else:
-        item = block[block.find(".") + 1:].strip()
-    return "<li>{}</li>".format(item)
-
-def escape_characters(block):
-
-'''
+            output_lines.append(lines.pop(0))
+        if output_lines[-1][:3] == "<li":
+            if not len(lines) or lines[0][:3] != "<li":
+                output_lines.append("</{}l>".format(list_type))
+    return output_lines
