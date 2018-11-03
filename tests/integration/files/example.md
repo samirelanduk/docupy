@@ -26,7 +26,7 @@ You [can](https://example.com/) have {multiple}(http://example3.com/ "t") links!
 This is code.
 ```
 
-```python 
+```python
 This is formatted code.
 ```
 

@@ -11,7 +11,7 @@ class MarkdownToHtmlTests(TestCase):
     @patch("docupy.markdown.add_list_tags")
     def test_can_convert_markdown_to_html(self, mock_list, mock_p, mock_esc):
         docupy.markdown.PATTERNS = OrderedDict((("20", "30"), ("H", "P")))
-        mock_esc.return_value = ["H\x1A\x1AL\n20", "TM"]
+        mock_esc.return_value = ["H\x1A\x1AL\r\n20", "TM"]
         mock_p.return_value = ["HTML", "20"]
         mock_list.return_value = ["1", "2", "3"]
         html = "HTML\n20"
