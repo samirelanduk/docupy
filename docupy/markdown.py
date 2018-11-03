@@ -26,7 +26,7 @@ PATTERNS = OrderedDict((
  (r"\{(.+?)\}\((.+?) \"(.+)\"\)", "<a href=\"\\2\" target=\"_blank\" "
   "title=\"\\3\">\\1</a>"),
  (r"\{(.+?)\}\((.+?)\)", "<a href=\"\\2\" target=\"_blank\">\\1</a>"),
- (r"```(\S+?)\n([\S\s]+?)```", "<code class=\"language-\\1\">\n\\2</code>"),
+ (r"```(\S+?) *\n([\S\s]+?)```", "<code class=\"language-\\1\">\n\\2</code>"),
  (r"```([\S\s]+?)```", "<code>\\1</code>")
 ))
 
