@@ -1,6 +1,16 @@
 Changelog
 ---------
 
+Release 0.3.0
+~~~~~~~~~~~~~
+
+`3 November 2018`
+
+* Added code block.
+
+* Simplified markdown to HTML algorithm.
+
+
 Release 0.2.0
 ~~~~~~~~~~~~~
 

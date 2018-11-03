@@ -84,7 +84,7 @@ def add_p_tags(lines):
     It will also remove empty lines.
 
     :param list lines: the lines to convert.
-    "rtype: ``list``"""
+    :rtype: ``list``"""
 
     output_lines = []
     in_code = False
@@ -106,7 +106,7 @@ def add_list_tags(lines):
     need it.
 
     :param list lines: the lines to convert.
-    "rtype: ``list``"""
+    :rtype: ``list``"""
 
     output_lines = []
     list_type = "u"

@@ -10,10 +10,6 @@ equivalent HTML.
   >>> import docupy
   >>> docupy.markdown_to_html("HTML is easy.")
   '<p>HTML is easy.</p>'
-
-Two line breaks are considered a new paragraph - windows line breaks will be
-converted to UNIX ones before processing:
-
   >>> docupy.markdown_to_html("HTML is easy.\n\nNew paragraph.\r\n\r\nThird.")
   '<p>HTML is easy.</p>\n<p>New paragraph.</p>\n<p>Third.</p>'
 
@@ -44,6 +40,8 @@ Images use ``![alt text](link/to/image)`` notation.
 Videos use ``!(link/to/video)`` notation.
 
 YouTube embeds use ``!{youtube_id}`` notation.
+
+Code can be embedded in ` characters.
 
 You can provide a lookup dictionary to substitute words for paths when rendered.
 For example the block ``![alt text](seaside-2)`` when rendered with
