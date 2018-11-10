@@ -26,8 +26,8 @@ PATTERNS = OrderedDict((
  (r"\{(.+?)\}\((.+?) \"(.+)\"\)", "<a href=\"\\2\" target=\"_blank\" "
   "title=\"\\3\">\\1</a>"),
  (r"\{(.+?)\}\((.+?)\)", "<a href=\"\\2\" target=\"_blank\">\\1</a>"),
- (r"```(.+?)\n([\S\s]+?)\n```", "<code class=\"language-\\1\">\\2</code>"),
- (r"```\n([\S\s]+?)\n```", "<code>\\1</code>")
+ (r"```(.+?)\n([\S\s]+?)\n```", "<pre><code data-language=\"\\1\">\\2</code></pre>"),
+ (r"```\n([\S\s]+?)\n```", "<pre><code>\\1</code></pre>")
 ))
 
 def markdown_to_html(markdown, paths=None):
@@ -90,13 +90,13 @@ def add_p_tags(lines):
     in_code = False
     for line in lines:
         if line.strip():
-            if line.strip().startswith("<code"): in_code = True
+            if line.strip().startswith("<pre"): in_code = True
             for b in BLOCKS:
                 if line.startswith("<" + b) or line.startswith("</" + b)\
                  or in_code: break
             else:
                 line = "<p>{}</p>".format(line)
-            if line.strip().endswith("</code>"): in_code = False
+            if line.strip().endswith("</pre>"): in_code = False
             output_lines.append(line)
     return output_lines
 

@@ -72,9 +72,9 @@ class CharacterEscapingTests(TestCase):
 class PTagAddingTests(TestCase):
 
     def test_can_add_p_tags(self):
-        lines = ["<h1>A</h1>", "B", "<a>C</a>", "", "<code>", "D", "E", "</code>"]
+        lines = ["<h1>A</h1>", "B", "<a>C</a>", "", "<pre>", "D", "E", "</pre>"]
         self.assertEqual(add_p_tags(lines), [
-         "<h1>A</h1>", "<p>B</p>", "<p><a>C</a></p>", "<code>", "D", "E", "</code>"
+         "<h1>A</h1>", "<p>B</p>", "<p><a>C</a></p>", "<pre>", "D", "E", "</pre>"
         ])
 
 
