@@ -1,15 +1,13 @@
-.. |travis| image:: https://api.travis-ci.org/samirelanduk/docupy.svg?branch=0.2
+|travis| |coveralls| |pypi|
 
-.. _travis https://travis-ci.org/samirelanduk/docupy/
+.. |travis| image:: https://api.travis-ci.org/samirelanduk/docupy.svg?branch=0.3
+  :target: https://travis-ci.org/samirelanduk/docupy/
 
-.. |coveralls| image:: https://coveralls.io/repos/github/samirelanduk/docupy/badge.svg?branch=0.2
-
-.. _coveralls https://coveralls.io/github/samirelanduk/docupy/
+.. |coveralls| image:: https://coveralls.io/repos/github/samirelanduk/docupy/badge.svg?branch=0.3
+  :target: https://coveralls.io/github/samirelanduk/docupy/
 
 .. |pypi| image:: https://img.shields.io/pypi/pyversions/docupy.svg
-
-
-|travis|_ |coveralls|_ |pypi|
+  :target: https://pypi.org/project/docupy/
 
 docupy
 ======
@@ -72,10 +70,6 @@ equivalent HTML.
   >>> import docupy
   >>> docupy.markdown_to_html("HTML is easy.")
   '<p>HTML is easy.</p>'
-
-Two line breaks are considered a new paragraph - windows line breaks will be
-converted to UNIX ones before processing:
-
   >>> docupy.markdown_to_html("HTML is easy.\n\nNew paragraph.\r\n\r\nThird.")
   '<p>HTML is easy.</p>\n<p>New paragraph.</p>\n<p>Third.</p>'
 
@@ -106,6 +100,8 @@ Images use ``![alt text](link/to/image)`` notation.
 Videos use ``!(link/to/video)`` notation.
 
 YouTube embeds use ``!{youtube_id}`` notation.
+
+Code can be embedded in ` characters.
 
 You can provide a lookup dictionary to substitute words for paths when rendered.
 For example the block ``![alt text](seaside-2)`` when rendered with
@@ -185,6 +181,16 @@ Example
 
 Changelog
 ---------
+
+Release 0.3.0
+~~~~~~~~~~~~~
+
+`10 November 2018`
+
+* Added code block.
+
+* Simplified markdown to HTML algorithm.
+
 
 Release 0.2.0
 ~~~~~~~~~~~~~
