@@ -4,7 +4,7 @@ Changelog
 Release 0.3.0
 ~~~~~~~~~~~~~
 
-`3 November 2018`
+`10 November 2018`
 
 * Added code block.
 
