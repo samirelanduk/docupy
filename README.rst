@@ -1,9 +1,9 @@
 |travis| |coveralls| |pypi|
 
-.. |travis| image:: https://api.travis-ci.org/samirelanduk/docupy.svg?branch=0.3
+.. |travis| image:: https://api.travis-ci.org/samirelanduk/docupy.svg?branch=0.3.1
   :target: https://travis-ci.org/samirelanduk/docupy/
 
-.. |coveralls| image:: https://coveralls.io/repos/github/samirelanduk/docupy/badge.svg?branch=0.3
+.. |coveralls| image:: https://coveralls.io/repos/github/samirelanduk/docupy/badge.svg?branch=0.3.1
   :target: https://coveralls.io/github/samirelanduk/docupy/
 
 .. |pypi| image:: https://img.shields.io/pypi/pyversions/docupy.svg
@@ -112,6 +112,12 @@ Group blocks
 
 Bullet pointed lists (``-``) and numbered lists will be detected automatically.
 
+Security
+~~~~~~~~
+
+Any HTML tags in the markdown will be escaped, preventing (among other things)
+the arbitrary injection of JavaScript via submitted markdown.
+
 
 Example
 ~~~~~~~
@@ -155,6 +161,8 @@ Example
 
   You can escape characters like \*this\* and \[this](see!).
 
+  <script>Evil Javascript</script>
+
 ...becomes...
 
 .. code-block:: html
@@ -177,10 +185,19 @@ Example
   <p>!As a side note, incorporating !{blocks} in paragraphs has no effect. See - !(/videos/vid.mp4).</p>
   <h2>Escaping</h2>
   <p>You can escape characters like *this* and [this](see!).</p>
+  <p>&#60;script&#62;Evil Javascript&#60;/script&#62;</p>
 
 
 Changelog
 ---------
+
+Release 0.3.1
+~~~~~~~~~~~~~
+
+`8 January 2018`
+
+* HTML tags in markdown now escaped.
+
 
 Release 0.3.0
 ~~~~~~~~~~~~~
