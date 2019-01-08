@@ -6,6 +6,8 @@ from collections import OrderedDict
 BLOCKS = ["h", "code", "div", "figure", "video", "li"]
 
 PATTERNS = OrderedDict((
+ (r"<", "&#60;"),
+ (r">", "&#62;"),
  (r"\n### (.+)", "\n<h3>\\1</h3>"),
  (r"\n## (.+)", "\n<h2>\\1</h2>"),
  (r"\n# (.+)", "\n<h1>\\1</h1>"),

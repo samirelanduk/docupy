@@ -58,7 +58,7 @@ Here is a list:
 - Item 1
 -Item 2
 
--   Item 3
+-   Item 3 <>
 
 Isn't it wonderful?
 
@@ -67,3 +67,5 @@ Numbered list:
 1.  First
 2. Second
 3.Third
+
+<script>Evil Javascript</script>
