@@ -1,6 +1,14 @@
 Changelog
 ---------
 
+Release 0.3.1
+~~~~~~~~~~~~~
+
+`8 January 2018`
+
+* HTML tags in markdown now escaped.
+
+
 Release 0.3.0
 ~~~~~~~~~~~~~
 

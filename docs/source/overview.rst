@@ -52,6 +52,12 @@ Group blocks
 
 Bullet pointed lists (``-``) and numbered lists will be detected automatically.
 
+Security
+~~~~~~~~
+
+Any HTML tags in the markdown will be escaped, preventing (among other things)
+the arbitrary injection of JavaScript via submitted markdown.
+
 
 Example
 ~~~~~~~
@@ -95,6 +101,8 @@ Example
 
   You can escape characters like \*this\* and \[this](see!).
 
+  <script>Evil Javascript</script>
+
 ...becomes...
 
 .. code-block:: html
@@ -117,3 +125,4 @@ Example
   <p>!As a side note, incorporating !{blocks} in paragraphs has no effect. See - !(/videos/vid.mp4).</p>
   <h2>Escaping</h2>
   <p>You can escape characters like *this* and [this](see!).</p>
+  <p>&#60;script&#62;Evil Javascript&#60;/script&#62;</p>
