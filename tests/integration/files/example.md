@@ -28,6 +28,7 @@ This is code.
 
 ```python
 This is formatted code.
+
 Line 2.
 ```
 

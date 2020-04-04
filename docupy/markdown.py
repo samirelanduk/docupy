@@ -100,6 +100,7 @@ def add_p_tags(lines):
                 line = "<p>{}</p>".format(line)
             if line.strip().endswith("</pre>"): in_code = False
             output_lines.append(line)
+        elif in_code: output_lines.append(line)
     return output_lines
 
 
