@@ -32,6 +32,8 @@ This is formatted code.
 Line 2.
 ```
 
+Some `inline code`.
+
 ## Media
 
 ![Image here!](/images/logo.png)

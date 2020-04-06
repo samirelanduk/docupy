@@ -29,7 +29,8 @@ PATTERNS = OrderedDict((
   "title=\"\\3\">\\1</a>"),
  (r"\{(.+?)\}\((.+?)\)", "<a href=\"\\2\" target=\"_blank\">\\1</a>"),
  (r"```(.+?)\n([\S\s]+?)\n```", "<pre><code data-language=\"\\1\">\\2</code></pre>"),
- (r"```\n([\S\s]+?)\n```", "<pre><code>\\1</code></pre>")
+ (r"```\n([\S\s]+?)\n```", "<pre><code>\\1</code></pre>"),
+ (r"`([\S\s]+?)`", "<code>\\1</code>")
 ))
 
 def markdown_to_html(markdown, paths=None):
