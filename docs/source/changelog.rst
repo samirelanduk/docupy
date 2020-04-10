@@ -1,6 +1,15 @@
 Changelog
 ---------
 
+Release 0.3.2
+~~~~~~~~~~~~~
+
+`10 April 2020`
+
+* Line breaks in code blocks now preserved.
+* Inline code blocks now supported.
+
+
 Release 0.3.1
 ~~~~~~~~~~~~~
 

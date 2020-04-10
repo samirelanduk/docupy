@@ -1,16 +1,23 @@
-|travis| |coveralls| |pypi|
+docupy
+======
 
-.. |travis| image:: https://api.travis-ci.org/samirelanduk/docupy.svg?branch=0.3.1
+|travis| |coveralls| |pypi| |version| |commit|
+
+.. |travis| image:: https://api.travis-ci.org/samirelanduk/docupy.svg?branch=0.3.2
   :target: https://travis-ci.org/samirelanduk/docupy/
 
-.. |coveralls| image:: https://coveralls.io/repos/github/samirelanduk/docupy/badge.svg?branch=0.3.1
+.. |coveralls| image:: https://coveralls.io/repos/github/samirelanduk/docupy/badge.svg?branch=0.3.2
   :target: https://coveralls.io/github/samirelanduk/docupy/
 
 .. |pypi| image:: https://img.shields.io/pypi/pyversions/docupy.svg
   :target: https://pypi.org/project/docupy/
 
-docupy
-======
+.. |version| image:: https://img.shields.io/pypi/v/docupy.svg
+  :target: https://pypi.org/project/docupy/
+
+.. |commit| image:: https://img.shields.io/github/last-commit/samirelanduk/docupy/0.3.2.svg
+  :target: https://github.com/samirelanduk/docupy/tree/0.3.2/
+
 
 docupy is a Python markdown library.
 
@@ -190,6 +197,15 @@ Example
 
 Changelog
 ---------
+
+Release 0.3.2
+~~~~~~~~~~~~~
+
+`10 April 2020`
+
+* Line breaks in code blocks now preserved.
+* Inline code blocks now supported.
+
 
 Release 0.3.1
 ~~~~~~~~~~~~~
